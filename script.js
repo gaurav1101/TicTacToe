@@ -1,6 +1,7 @@
 let turn="x";
 let isgameover=false;
 let isReset=false;
+let isGameDraw=false;
 
 changeTurn=()=>{
 return turn ==="x"?"0":"x"}
@@ -8,29 +9,42 @@ return turn ==="x"?"0":"x"}
 function checkWin(){
    
     let boxtexts=document.getElementsByClassName("box");
-    let cmbinations=[[0,1,2], [3,4,5],[6,7,8],
-                    [0,3,6], [1,4,8],[2,5,8],
-                    [0,4,8], [2,4,6]];
+    let cmbinations=[[0,1,2,0,5,0], [3,4,5,0,15,0],[6,7,8,0,25,0],
+                    [0,3,6,-10,15,90], [1,4,7,0,10,45],[2,5,8,10,15,90],
+                    [0,4,8,0,15,45], [2,4,6,0,15,135]];
                     //if(!isReset){
                     cmbinations.forEach(e=>{
                        if((boxtexts[e[0]].innerText===boxtexts[e[1]].innerText) 
                         && (boxtexts[e[2]].innerText===boxtexts[e[1]].innerText) 
                         && (boxtexts[e[0]].innerText!==""))
                         {
-                            document.getElementsByClassName("info")[0].innerHTML="Mr "+boxtexts[e[0]].innerHTML +" Won";
+                            document.getElementsByClassName("info")[0].innerHTML="Mr "+boxtexts[e[0]].innerHTML +" Won Click Reset to Restart";
                             //boxtexts[e[0]].innerText="";
+                            document.querySelector('.line').style.width='30vw';
+                            document.querySelector('.line').style.transform= `translate(${e[3]}vw,${e[4]}vw) rotate(${e[5]}deg)` 
+                           
+                            isgameover=true;
+                            isGameDraw=false;
+                            document.addEventListener("click",handler,true);
+                        }
+
+                        else if((boxtexts[0].innerText!=='' && boxtexts[1].innerText!=='' && boxtexts[2].innerText!==''
+                        && boxtexts[3].innerText!=='' && boxtexts[4].innerText!=='' && boxtexts[5].innerText!==''
+                        && boxtexts[6].innerText!=='' && boxtexts[7].innerText!=='' && boxtexts[8].innerText!=='')
+                        &&(boxtexts[e[0]].innerText!==boxtexts[e[1]].innerText) 
+                        && (boxtexts[e[2]].innerText!==boxtexts[e[1]].innerText) 
+                       )
+                        {
+                            document.getElementsByClassName("info")[0].innerHTML="draw, Click Reset to Restart"; 
+                            isGameDraw=true;
                             isgameover=true;
                         }
                     });
-               // }
-                // else{
-                //     for(let i=0;i<=8;i++){
-                //         boxtexts[i].innerText="";
-                //     }
                     
-                //     document.getElementsByClassName("info")[0].innerHTML="Now its turn of  x";
-                //     isgameover=false;
-                // }
+                    function handler(e){
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
                     
     
              
@@ -45,7 +59,7 @@ Array.from(boxes).forEach(e=>{
         boxElement.innerHTML=turn;
        turn= changeTurn();
         checkWin();
-        if(!isgameover){
+        if(!isgameover && !isGameDraw){
         document.getElementsByClassName("info")[0].innerHTML="Now its turn of Mr  " +turn;
         }
         
@@ -61,7 +75,8 @@ reset.addEventListener('click',()=>{
 valuesToReset.innerText='';
     })
     isgameover=false;
-    document.getElementsByClassName("info")[0].innerHTML="Now its turn of  x";
+    document.getElementsByClassName("info")[0].innerHTML="Game is Reset ";
+    document.querySelector('.line').style.width='0vw';
     })
     
 

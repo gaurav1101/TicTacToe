@@ -30,6 +30,7 @@ nav{
    grid-template-rows: repeat(3,10vw);
    grid-template-columns: repeat(3,10vw);
    font-family: Georgia, 'Times New Roman', Times, serif;
+   position: relative;
   
 }
 
@@ -67,6 +68,14 @@ nav{
     font-size: 25px;
     font-style: italic;
     color: blue;
+}
+
+.line{
+    position :absolute;
+    width:0px;
+    height:2px;
+    background-color: blue;
+    transition: width 1s ease-in-out;
 }
 
 .btn-bt{
