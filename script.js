@@ -75,7 +75,8 @@ reset.addEventListener('click',()=>{
 valuesToReset.innerText='';
     })
     isgameover=false;
-    document.getElementsByClassName("info")[0].innerHTML="Game is Reset ";
+    isGameDraw=false;
+    document.getElementsByClassName("info")[0].innerText="Game is Reset ";
     document.querySelector('.line').style.width='0vw';
     })
     
